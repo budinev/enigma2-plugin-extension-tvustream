@@ -197,7 +197,9 @@ server_ref()
 plugin_path = '/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/'
 service_types_tv = '1:7:1:0:0:0:0:0:0:0:(type == 1) || (type == 17) || (type == 22) || (type == 25) || (type == 134) || (type == 195)'
 dir_enigma2 = '/etc/enigma2/'
-addFont('/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/fonts/JAi.ttf', 'OpenFont1', 100, 1)
+# addFont('/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/fonts/JAi.ttf', 'OpenFont1', 100, 1)
+
+addFont('/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/fonts/verdana_r.ttf', 'OpenFont1', 100, 1)
 addFont('/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/fonts/showg.ttf', 'OpenFont2', 100, 1)
 
 #brand
