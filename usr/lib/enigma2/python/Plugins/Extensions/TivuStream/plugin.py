@@ -74,8 +74,8 @@ def _(txt):
 localeInit()
 language.addCallback(localeInit)
 
-currversion = '1.6'
-Version = ' 1.6 - 11.11.2018'
+currversion = '1.5'
+Version = ' 1.5 - 21.11.2018'
 Credit = ' Buio2005,Furlan,Daimon'
 Maintainer2 = ' @Lululla'
 
@@ -237,8 +237,9 @@ def m3ulistEntry(download):
     backcol = 0
     blue = 4282611429
     # res.append(MultiContentEntryText(pos=(0, 0), size=(1000, 40), text=download, color=col, color_sel=green, backcolor=backcol, backcolor_sel=yellow))
-    res.append(MultiContentEntryText(pos=(0, 0), size=(1000, 40), text=download, color=blue, color_sel=yellow))    
-    # res.append(MultiContentEntryText(pos=(0, 0), size=(1000, 40), text=download, color=blue, color_sel=yellow, backcolor_sel=blue))        
+    # res.append(MultiContentEntryText(pos=(0, 0), size=(1000, 40), text=download, color=blue, color_sel=yellow))    
+    # res.append(MultiContentEntryText(pos=(0, 0), size=(1000, 40), text=download, color=blue, color_sel=yellow, backcolor_sel=blue))    
+    res.append(MultiContentEntryText(pos=(0, 0), size=(1000, 50), text=download))    
     return res
 
 def m3ulist(data, list):
@@ -249,18 +250,34 @@ def m3ulist(data, list):
         mlist.append(m3ulistEntry(name))
         icount = icount + 1
     list.setList(mlist)
+
+
+# class m2list(MenuList):
+
+    # def __init__(self, list):
+        # MenuList.__init__(self, list, False, eListboxPythonMultiContent)
+        # self.l.setFont(0, gFont('Regular', 14))
+        # self.l.setFont(1, gFont('Regular', 16))
+        # self.l.setFont(2, gFont('Regular', 18))
+        # self.l.setFont(3, gFont('Regular', 20))
+        # self.l.setFont(4, gFont('Regular', 22))
+        # self.l.setFont(5, gFont('Regular', 24))
+        # self.l.setFont(6, gFont('Regular', 26))
+        # self.l.setFont(7, gFont('Regular', 28))
+        # self.l.setFont(8, gFont('Regular', 30))
+
     
 class ListMenu(MenuList):
     def __init__(self, list):
         MenuList.__init__(self, list, True, eListboxPythonMultiContent)
         if DESKHEIGHT > 1000:
-            self.l.setItemHeight(40)
-            textfont = int(32)
-            self.l.setFont(0, gFont('OpenFont1', textfont))
+            self.l.setItemHeight(50)
+            textfont = int(40)
+            self.l.setFont(0, gFont('OpenFont2', textfont))
         else:
             self.l.setItemHeight(30)
             textfont = int(22)
-            self.l.setFont(0, gFont('OpenFont1', textfont))
+            self.l.setFont(0, gFont('OpenFont2', textfont))
    
 def remove_line(filename, what):
     if os.path.isfile(filename):
@@ -399,6 +416,7 @@ class OpenScript(Screen):
         self.skin = f.read()
         f.close()         
         Screen.__init__(self, session)
+        
         self.list = []
         self['list'] = MenuList([])
         self.icount = 0
@@ -447,6 +465,7 @@ class OpenScript(Screen):
         self['fitgreen'] = Label(_('Ricarica Bouquet'))
         self['fityellow'] = Label(_('Elimina'))
         self['fitblue'] = Label(_('Player List'))
+        self['fitmenu'] = Label(_('Menu'))        
         self['actions'] = ActionMap(['OkCancelActions',
          'DirectionActions',
          'MenuActions',
@@ -662,6 +681,11 @@ class OpenM3u(Screen):
         Screen.__init__(self, session)
         self.list = []
         self['list'] = ListMenu([])
+        
+        # self.list = []
+        # self['list'] = MenuList([])
+
+        
         global srefInit
         self.initialservice = self.session.nav.getCurrentlyPlayingServiceReference()
         srefInit = self.initialservice
@@ -1179,7 +1203,13 @@ class AddIpvStream(Screen):
 
     def __init__(self, session, name, url):
         self.session = session
-        skin = SKIN_PATH + '/AddIpvStream.xml'
+
+        if fileExists(BRAND) or fileExists(BRANDP):
+            skin = SKIN_PATH + '/AddIpvStreamOpen.xml'
+        else:
+            skin = SKIN_PATH + '/AddIpvStream.xml'        
+        
+        #skin = SKIN_PATH + '/AddIpvStream.xml'
         f = open(skin, 'r')
         self.skin = f.read()
         f.close()          
@@ -1609,7 +1639,14 @@ class openMessageBox(Screen):
     def __init__(self, session, text, type = TYPE_YESNO, timeout = -1, close_on_any_key = False, default = True, enable_input = True, msgBoxID = None, picon = None, simple = False, list = [], timeout_default = None):
         self.type = type
         self.session = session
-        skin = SKIN_PATH + '/OpenMessageBox.xml'
+        
+        if fileExists(BRAND) or fileExists(BRANDP):
+            skin = SKIN_PATH + '/OpenMessageBoxOpen.xml'
+        else:
+            skin = SKIN_PATH + '/OpenMessageBox.xml'        
+        
+        
+        #skin = SKIN_PATH + '/OpenMessageBox.xml'
         f = open(skin, 'r')
         self.skin = f.read()
         f.close()          

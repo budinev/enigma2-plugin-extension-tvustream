@@ -22,7 +22,7 @@
   <!--
   <widget name="list" position="83,100" size="700,500" itemHeight="36" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/FullHD/sel32_1060.png" foregroundColor="#fff700" transparent="1" zPosition="10" />
   -->
-  <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/FullHD/sel50_1060.png" position="239,207" size="650,500" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="50" transparent="1" />  
+  <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/FullHD/sel50_1060.png" position="239,207" size="650,500" font="OpenFont2;32" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="50" transparent="1" />  
 
     
   <widget name="Text" font="Regular;30" position="241,348" size="694,308" foregroundColor="yellow" backgroundColor="blue" transparent="1" zPosition="10" />

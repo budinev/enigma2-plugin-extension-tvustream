@@ -32,7 +32,7 @@
 
   <widget name="menu" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/FullHD/sel32_1060.png" position="83,100" size="700,711" font="OpenFont1;34" zPosition="3" scrollbarMode="showOnDemand" foregroundColor="#660000" backgroundColor="blue" foregroundColorSelected="yellow" backgroundColorSelected="blue" itemHeight="40" transparent="0" />
 -->
-  <widget name="menu" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/FullHD/sel50_1060.png" position="239,207" size="550,500"
+  <widget name="menu" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/FullHD/sel50_1060.png" position="239,207" size="550,500" font="OpenFont2;34"
     foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" 
     itemHeight="50" transparent="1" />      
   
