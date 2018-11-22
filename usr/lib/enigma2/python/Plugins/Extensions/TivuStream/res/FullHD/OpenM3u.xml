@@ -44,7 +44,7 @@
     
     
     
-  <widget name="info" position="1343,896" zPosition="5" size="545,84" font="OpenFont2;40" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" halign="center" valign="left" />
+  <widget name="info" position="1343,896" zPosition="5" size="545,84" font="OpenFont2;40" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" halign="center" />
   <widget name="path" position="1121,828" zPosition="3" size="716,63" font="OpenFont1;34" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" halign="right" />
 
 </screen>

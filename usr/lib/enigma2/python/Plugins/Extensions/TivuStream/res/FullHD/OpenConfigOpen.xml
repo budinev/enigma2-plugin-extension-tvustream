@@ -43,7 +43,7 @@
     foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" 
     itemHeight="50" transparent="1" />    
     
-  <widget name="text" position="1119,742" size="647,261" font="Regular;30" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" zPosition="4" valign="top" />
-  <widget name="description" position="50,762" size="970,81" font="Regular; 36" foregroundColor="#ffff00" transparent="1" zPosition="4" />
+  <widget name="text" position="1119,742" size="647,261" font="Regular;30" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" zPosition="4" />
+  <widget name="description" position="140,762" size="970,81" font="Regular; 36" foregroundColor="#ffff00" transparent="1" zPosition="4" />
   
   </screen>
