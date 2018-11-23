@@ -1,1 +1,1 @@
-# enigma2-plugin-extension-tvustream
+# enigma2-plugin-extension-tivustream
