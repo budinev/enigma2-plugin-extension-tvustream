@@ -74,8 +74,8 @@ def _(txt):
 localeInit()
 language.addCallback(localeInit)
 
-currversion = '1.6'
-Version = ' 1.6 - 21.11.2018'
+currversion = '1.5'
+Version = ' 1.5 - 21.11.2018'
 Credit = ' Buio2005,Furlan,Daimon'
 Maintainer2 = ' @Lululla'
 
