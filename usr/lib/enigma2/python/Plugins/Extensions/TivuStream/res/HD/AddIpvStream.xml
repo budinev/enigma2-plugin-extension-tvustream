@@ -1,16 +1,29 @@
-<screen name="AddIpvStream" flags="wfNoBorder" position="center,center" size="1280,720" title="-TivuStream-" backgroundColor="#00000000">
-  <ePixmap position="0,0" zPosition="-1" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/1280_720backtv.png" alphatest="blend" />
-  <widget name="fittitle" position="379,44" zPosition="3" size="494,37" font="OpenFont1;24" foregroundColor="#3399ff" backgroundColor="#000000" transparent="1" halign="center" />
-  <widget name="version" position="320,672" zPosition="3" size="261,38" font="OpenFont1;20" foregroundColor="#00ff00" transparent="1" halign="right" />
-  <widget name="version2" position="583,672" halign="left" size="250,39" zPosition="3" font="OpenFont1;20" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
-  <widget name="Maintainer" position="6,672" halign="right" size="160,38" zPosition="3" font="OpenFont1;20" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" />
-  <widget name="Maintainer2" position="167,672" halign="left" size="216,39" zPosition="3" font="OpenFont1;20" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
-  <widget name="infoc" position="754,672" halign="right" size="189,39" zPosition="3" font="OpenFont1;20" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" />
-  <widget name="infoc2" position="944,672" halign="left" size="332,39" zPosition="3" font="OpenFont1;20" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
-  <ePixmap position="21,95" zPosition="1" size="230,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/logosk.png" alphatest="blend" />
-  <widget source="session.VideoPicture" render="Pig" position="839,128" size="429,246" backgroundColor="transparent" zPosition="3" />
-  <eLabel name="label" zPosition="1" position="377,239" size="450,320" transparent="1" />
-  <widget name="menu" position="377,239" size="450,320" zPosition="3" scrollbarMode="showOnDemand" foregroundColor="yellow" enableWrapAround="1" transparent="1" />
-  <widget name="statusbar" render="Label" zPosition="3" size="707,40" font="OpenFont1;22" foregroundColor="white" backgroundColor="black" transparent="1" halign="center" position="264,620" />  
+<screen name="AddIpvStreamFHD" flags="wfNoBorder" position="0,0" size="1280,720" title="-TivuStream-" backgroundColor="#00000000">
+  <ePixmap position="0,0" zPosition="-1" size="1280,714" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/1280_720backtv.png" alphatest="blend" />
   
+  <widget name="fittitle" position="55,14" zPosition="3" size="469,52" font="OpenFont1;29" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" halign="center" />
+  <widget name="version" position="268,674" zPosition="3" size="198,33" font="OpenFont1;21" foregroundColor="#00ff00" transparent="1" halign="right" />
+  <widget name="version2" position="466,674" halign="left" size="254,33" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
+  
+  <widget name="infoc" position="714,674" size="150,33" font="OpenFont1;21" halign="right" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" zPosition="3" />
+  <widget name="infoc2" position="866,674" halign="left" size="396,33" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
+  
+  <widget name="Maintainer" position="8,674" halign="right" size="150,33" zPosition="3" font="OpenFont1;21" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" />
+  <widget name="Maintainer2" position="158,674" halign="left" size="166,33" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
+  
+  <ePixmap position="949,3" zPosition="1" size="213,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/logosk.png" alphatest="blend" />
+  <widget source="session.VideoPicture" render="Pig" position="677,139" size="534,260" backgroundColor="transparent" zPosition="3" />
+
+<!--  
+  <widget name="menu" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel32_1060.png" position="55,66" size="466,474" font="OpenFont1;22" zPosition="3" scrollbarMode="showOnDemand" foregroundColor="#660000" backgroundColor="blue" foregroundColorSelected="yellow" backgroundColorSelected="blue" itemHeight="26" transparent="0" />
+-->
+  <widget name="menu" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" position="159,138" size="366,333"
+    foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" 
+    itemHeight="33" transparent="1" />      
+  <!--
+  <widget name="statusbar" render="Label" position="482,516" zPosition="3" size="480,33" font="OpenFont1;21" foregroundColor="white" backgroundColor="black" transparent="1" halign="center" />
+-->
+  <widget name="statusbar" render="Label" position="482,516" zPosition="3" size="480,33" font="OpenFont2;26" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" halign="center" />
+
+ 
 </screen>

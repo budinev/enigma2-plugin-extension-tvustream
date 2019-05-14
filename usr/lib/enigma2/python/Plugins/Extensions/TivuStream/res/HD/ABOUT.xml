@@ -1,25 +1,44 @@
-<screen name="ABOUT" flags="wfNoBorder" position="center,center" size="1280,720" title="-TivuStream-" backgroundColor="#00000000">
-  <ePixmap position="0,0" zPosition="-1" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/1280_720backtv.png" alphatest="blend" />
-  <widget name="fittitle" position="379,44" zPosition="3" size="494,37" font="OpenFont1;24" foregroundColor="#3399ff" backgroundColor="#000000" transparent="1" halign="center" />
-  <widget name="version" position="320,672" zPosition="3" size="261,38" font="OpenFont1;20" foregroundColor="#00ff00" transparent="1" halign="right" />
-  <widget name="version2" position="583,672" halign="left" size="250,39" zPosition="3" font="OpenFont1;20" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
-  <widget name="Maintainer" position="6,672" halign="right" size="160,38" zPosition="3" font="OpenFont1;20" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" />
-  <widget name="Maintainer2" position="167,672" halign="left" size="216,39" zPosition="3" font="OpenFont1;20" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
-  <widget name="infoc" position="754,672" halign="right" size="189,39" zPosition="3" font="OpenFont1;20" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" />
-  <widget name="infoc2" position="944,672" halign="left" size="332,39" zPosition="3" font="OpenFont1;20" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
-
-  <ePixmap position="21,95" zPosition="1" size="230,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/logosk.png" alphatest="blend" />
-  <widget source="session.VideoPicture" render="Pig" position="839,128" size="429,246" backgroundColor="transparent" zPosition="3" />
+<screen name="ABOUTFHD" flags="wfNoBorder" position="0,0" size="1280,720" title="-TivuStream-" backgroundColor="#00000000">
+  <ePixmap position="0,0" zPosition="-1" size="1280,714" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/1280_720backtv.png" alphatest="blend" />
   
-  <widget name="fitred" position="25,220" zPosition="3" size="225,68" font="OpenFont2;26" halign="center" foregroundColor="red" transparent="1" />
-  <widget name="fitgreen" position="23,316" zPosition="3" size="225,68" font="OpenFont2;26" halign="center" foregroundColor="green" transparent="1" />
-  <widget name="fityellow" position="22,415" zPosition="3" size="225,68" font="OpenFont2;26" halign="center" foregroundColor="yellow" transparent="1" />
-  <widget name="fitblue" position="20,508" zPosition="3" size="225,68" font="OpenFont2;26" halign="center" foregroundColor="blue" transparent="1" />
-  <eLabel position="26,202" size="225,17" backgroundColor="red" zPosition="1" />
-  <eLabel position="23,305" size="226,10" backgroundColor="green" zPosition="1" />
-  <eLabel position="23,404" size="223,10" backgroundColor="yellow" zPosition="1" />
-  <eLabel position="22,497" size="224,10" backgroundColor="blue" zPosition="1" />
-  <widget name="info" position="836,465" size="436,185" font="OpenFont1;20" foregroundColor="#ffff00" transparent="1" zPosition="4" />
-  <eLabel name="label" zPosition="1" position="377,126" size="450,463" transparent="1" />
-  <widget name="text" position="377,126" zPosition="5" size="450,463" font="OpenFont1;20" foregroundColor="#ffff00" /> 
+  <widget name="fittitle" position="55,14" zPosition="3" size="469,52" font="OpenFont1;29" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" halign="center" />
+  <widget name="version" position="268,674" zPosition="3" size="198,33" font="OpenFont1;21" foregroundColor="#00ff00" transparent="1" halign="right" />
+  <widget name="version2" position="466,674" halign="left" size="254,33" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
+  
+  <widget name="infoc" position="714,674" size="150,33" font="OpenFont1;21" halign="right" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" zPosition="3" />
+  <widget name="infoc2" position="866,674" halign="left" size="396,33" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
+  
+  <widget name="Maintainer" position="8,674" halign="right" size="150,33" zPosition="3" font="OpenFont1;21" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" />
+  <widget name="Maintainer2" position="158,674" halign="left" size="166,33" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
+  
+  <ePixmap position="949,3" zPosition="1" size="213,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/logosk.png" alphatest="blend" />
+  <widget source="session.VideoPicture" render="Pig" position="677,139" size="534,260" backgroundColor="transparent" zPosition="3" />
+
+  <widget name="fitred" position="8,597" zPosition="3" size="220,56" font="OpenFont2;26" halign="center" foregroundColor="red" transparent="1" />
+  <widget name="fityellow" position="449,597" zPosition="3" size="220,56" font="OpenFont2;26" halign="center" foregroundColor="yellow" transparent="1" />
+  <widget name="fitgreen" position="227,597" zPosition="3" size="220,56" font="OpenFont2;26" halign="center" foregroundColor="green" transparent="1" />
+  <widget name="fitblue" position="671,597" zPosition="3" size="220,56" font="OpenFont2;26" halign="center" foregroundColor="blue" transparent="1" />
+
+<eLabel position="8,654" size="220,6" backgroundColor="red" zPosition="1" />
+<eLabel position="229,654" size="220,6" backgroundColor="green" zPosition="1" />
+<eLabel position="451,654" size="220,6" backgroundColor="yellow" zPosition="1" />
+<eLabel position="672,654" size="220,6" backgroundColor="blue" zPosition="1" />
+
+
+
+  
+<!-- 
+  <widget name="text" position="55,66" zPosition="3" size="466,524" font="OpenFont1;18" halign="center" foregroundColor="#660000" backgroundColor="blue" transparent="0" />  
+
+  <eLabel name="label" zPosition="1" position="47,58" size="8,537" backgroundColor="red" transparent="0" />
+  <eLabel name="label" zPosition="1" position="520,58" size="8,537" backgroundColor="red" transparent="0" />
+  <eLabel name="label" zPosition="1" position="47,58" size="482,8" backgroundColor="red" transparent="0" />
+  <eLabel name="label" zPosition="1" position="47,588" size="482,8" backgroundColor="red" transparent="0" /> -->
+
+
+  <!--
+  <widget name="status" zPosition="3" position="415,569" size="475,32" transparent="1" font="OpenFont1;25" foregroundColor="foreground" backgroundColor="background" valign="center" halign="center" noWrap="1" />
+  <widget source="progress" zPosition="3" render="Progress" position="931,686" size="336,18" transparent="1" borderWidth="0" />
+  <widget source="progresstext" render="Label" position="730,682" zPosition="3" font="OpenFont1;14" halign="right" transparent="1" size="200,26" foregroundColor="foreground" backgroundColor="background" />
+  -->
 </screen>

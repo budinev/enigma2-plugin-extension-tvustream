@@ -54,8 +54,8 @@ import urllib2
 import cookielib
 
 
-currversion = '1.5'
-Version = ' 1.5 - 29.03.2019'
+currversion = '1.6'
+Version = ' 1.6 - 08.05.2019'
 Crediti = ' Buio2005,Furlan,Lanus'
 Maintainer2 = ' @Lululla'
 #
@@ -1278,7 +1278,7 @@ class OpenConfig(Screen, ConfigListScreen):
         Screen.__init__(self, session)
         info = '***'
         self['fittitle'] = Label(_('..:: TivuStream Config ::..'))        
-        self['infoc'] = Label(Crediti)         
+        # self['infoc'] = Label(Crediti)         
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
         self['version'] = Label(_('Versione'))

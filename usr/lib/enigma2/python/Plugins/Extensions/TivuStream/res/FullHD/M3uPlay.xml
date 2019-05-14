@@ -42,6 +42,6 @@
     
   <widget name="info" position="1344,916" zPosition="5" size="196,64" font="OpenFont2;32" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" halign="right" />
   <widget name="live" position="1544,916" size="337,65" zPosition="3" font="OpenFont2;32" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" halign="left" />
-  
+  <widget name="service" position="1015,772" zPosition="3" size="860,119" font="OpenFont1;34" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" halign="right" />  
 
  </screen>
