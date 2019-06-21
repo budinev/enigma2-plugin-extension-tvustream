@@ -54,8 +54,8 @@ import urllib2
 import cookielib
 
 
-currversion = '1.6'
-Version = ' 1.6 - 08.05.2019'
+currversion = '1.7'
+Version = ' 1.7 - 19.06.2019'
 Crediti = ' Buio2005,Furlan,Lanus'
 Maintainer2 = ' @Lululla'
 #
@@ -307,7 +307,7 @@ def DownloadInfo(url):
         # self.skin = f.read()
         # f.close()          
         # Screen.__init__(self, session)
-        # self['fittitle'] = Label(_('..:: TivuStream About ::..'))
+        # self['fittitle'] = Label(_('..:: TiVuStream About ::..'))
         # self['fitred'] = Label(_('Esci'))
         # self['fitgreen'] = Label(_('Config'))
         # self['fityellow'] = Label(_('Open List'))
@@ -410,6 +410,7 @@ class OpenScript(Screen):
             self.list = []
             self.list.append("FREE_ALL")
             self.list.append("ITALIA")
+            self.list.append("FICTION")   			
             self.list.append("INTERNATIONAL")                
             self.list.append("MEDIAPLAY")                
             self.list.append("SPORT")
@@ -422,6 +423,7 @@ class OpenScript(Screen):
             self.list = []     
             self.list.append("FREE_ALL")
             self.list.append("ITALIA")
+            self.list.append("FICTION")  			
             self.list.append("INTERNATIONAL")                  
             self.list.append("MEDIAPLAY")                   
             self.list.append("SPORT")
@@ -430,7 +432,7 @@ class OpenScript(Screen):
             self.list.append("RADIO")
             self['list'] = MenuList(self.list)
             
-        self['fittitle'] = Label(_('..:: TivuStream List ::..'))   
+        self['fittitle'] = Label(_('..:: TiVuStream List ::..'))   
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
         self['version'] = Label(_('Versione'))
@@ -504,6 +506,9 @@ class OpenScript(Screen):
                         elif returnValue is "ITALIA":
                                 name = 'tivustream_italia'
                                 self.instal_listTv(name)
+                        elif returnValue is "FICTION":
+                                name = 'tivustream_fiction'
+                                self.instal_listTv(name)                                
                         elif returnValue is "INTERNATIONAL":
                                 name = 'tivustream_internat'
                                 self.instal_listTv(name)                                   
@@ -608,7 +613,7 @@ class OpenScript(Screen):
             ReloadBouquet()
 
     def messagedellist(self):
-        self.session.openWithCallback(self.deletelist, openMessageBox, _('ATTENZIONE') + ':\n' + _('Eliminare le liste canali TivuStream') + ' ?', openMessageBox.TYPE_YESNO)
+        self.session.openWithCallback(self.deletelist, openMessageBox, _('ATTENZIONE') + ':\n' + _('Eliminare le liste canali TiVuStream') + ' ?', openMessageBox.TYPE_YESNO)
 
         
     def deletelist(self, result):
@@ -630,7 +635,7 @@ class OpenScript(Screen):
 
     def reloadSettings2(self):
         ReloadBouquet()
-        self.mbox = self.session.open(openMessageBox, _('Liste canali TivuStream eliminate con successo'), openMessageBox.TYPE_INFO, timeout=4)
+        self.mbox = self.session.open(openMessageBox, _('Liste canali TiVuStream eliminate con successo'), openMessageBox.TYPE_INFO, timeout=4)
 
     def M3uPlay(self):
         self.session.open(OpenM3u)
@@ -650,7 +655,7 @@ class OpenM3u(Screen):
         global srefInit
         self.initialservice = self.session.nav.getCurrentlyPlayingServiceReference()
         srefInit = self.initialservice
-        self['fittitle'] = Label(_('..:: TivuStream Player ::..'))        
+        self['fittitle'] = Label(_('..:: TiVuStream Player ::..'))        
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
         self['version'] = Label(_('Versione'))
@@ -810,7 +815,7 @@ class OpenM3u(Screen):
                         else:
                             desk_tmp = '%s\r\n' % line.split('<')[1].split('>')[1]
                 outfile.close()
-            self['info'].setText(_('TivuStream M3U:') + _('Apri Selezione'))
+            self['info'].setText(_('TiVuStream M3U:') + _('Apri Selezione'))
             self.mbox = self.session.open(openMessageBox, _('Controlla nella lista favoriti ...'), openMessageBox.TYPE_INFO, timeout=5)
             if os.path.isfile('/etc/enigma2/bouquets.tv'):
                 for line in open('/etc/enigma2/bouquets.tv'):
@@ -856,7 +861,7 @@ class OpenM3u(Screen):
                         else:
                             desk_tmp = '%s\r\n' % line.split('<')[1].split('>')[1]
                 outfile.close()
-            self['info'].setText(_('TivuStream M3U:') + _('Apri Selezione'))
+            self['info'].setText(_('TiVuStream M3U:') + _('Apri Selezione'))
             self.mbox = self.session.open(openMessageBox, _('Controlla nella lista favoriti ...'), openMessageBox.TYPE_INFO, timeout=5)
             if os.path.isfile('/etc/enigma2/bouquets.tv'):
                 for line in open('/etc/enigma2/bouquets.tv'):
@@ -903,7 +908,7 @@ class OpenM3u(Screen):
                             desk_tmp = '%s\r\n' % line.split('<')[1].split('>')[1]
 
                 outfile.close()
-            self['info'].setText(_('TivuStream M3U:') + _('Apri Selezione'))
+            self['info'].setText(_('TiVuStream M3U:') + _('Apri Selezione'))
             self.mbox = self.session.open(openMessageBox, _('Controlla nella lista favoriti ...'), openMessageBox.TYPE_INFO, timeout=5)
             if os.path.isfile('/etc/enigma2/bouquets.tv'):
                 for line in open('/etc/enigma2/bouquets.tv'):
@@ -922,10 +927,10 @@ class OpenM3u(Screen):
 
     def cancel(self):
         if self.convert == False:
-            self['info'].setText(_('TivuStream M3U:') + _('Apri Selezione'))
+            self['info'].setText(_('TiVuStream M3U:') + _('Apri Selezione'))
             self.close()
         else:
-            self['info'].setText(_('TivuStream M3U:') + _('Apri Selezione'))
+            self['info'].setText(_('TiVuStream M3U:') + _('Apri Selezione'))
             self.close()
 
 
@@ -939,7 +944,7 @@ class M3uPlay(Screen):
         Screen.__init__(self, session)
         self.list = []
         self['list'] = ListMenu([])
-        self['fittitle'] = Label(_('..:: TivuStream Player ::..'))    
+        self['fittitle'] = Label(_('..:: TiVuStream Player ::..'))    
         self['info'] = Label()  
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
@@ -1157,7 +1162,7 @@ class AddIpvStream(Screen):
         self.skin = f.read()
         f.close()          
         Screen.__init__(self, session)
-        self['fittitle'] = Label(_('..:: TivuStream Add Stream ::..'))  
+        self['fittitle'] = Label(_('..:: TiVuStream Add Stream ::..'))  
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
         self['version'] = Label(_('Versione'))
@@ -1277,7 +1282,7 @@ class OpenConfig(Screen, ConfigListScreen):
         f.close()  
         Screen.__init__(self, session)
         info = '***'
-        self['fittitle'] = Label(_('..:: TivuStream Config ::..'))        
+        self['fittitle'] = Label(_('..:: TiVuStream Config ::..'))        
         # self['infoc'] = Label(Crediti)         
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
@@ -1291,7 +1296,7 @@ class OpenConfig(Screen, ConfigListScreen):
         # self['fitblue'] = Label(_(''))        
         self['text'] = Label(info)
         self["description"] = Label(_(''))
-        self.setup_title = _("TivuStream Config")
+        self.setup_title = _("TiVuStream Config")
         self.onChangedEntry = [ ]
         self.list = []
         ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
@@ -1329,13 +1334,13 @@ class OpenConfig(Screen, ConfigListScreen):
             self.info = s3
             fp.close()
             if s1 == currversion:
-                self['text'].setText(_('TivuStream versione: ') + currversion + '\n'+ _('Nessun aggiornamento online!') + '\n' + _('se ti piace puoi fare una libera donazione') + '\n' + _('www.paypal.me/TivuStream'))# + _('\nPLEASE DONATE'))
+                self['text'].setText(_('TiVuStream versione: ') + currversion + '\n'+ _('Nessun aggiornamento online!') + '\n' + _('se ti piace puoi fare una libera donazione') + '\n' + _('www.paypal.me/TivuStream'))# + _('\nPLEASE DONATE'))
                 self.cbUpdate = False
             elif float(s1) < float(currversion):
-                self['text'].setText(_('TivuStream versione: ') + currversion + '\n'+ _('Nessun aggiornamento online!') + '\n' + _('se ti piace puoi fare una libera donazione') + '\n' + _('www.paypal.me/TivuStream'))# + _('\nPLEASE DONATE'))
+                self['text'].setText(_('TiVuStream versione: ') + currversion + '\n'+ _('Nessun aggiornamento online!') + '\n' + _('se ti piace puoi fare una libera donazione') + '\n' + _('www.paypal.me/TivuStream'))# + _('\nPLEASE DONATE'))
                 self.cbUpdate = False
             else:
-                updatestr = (_('TivuStream versione: ') + currversion + '\n' + _('Ultimo aggiornamento ') + s1 + ' ' + _('disponibile!') + '\n' + _('ChangeLog:') + self.info)
+                updatestr = (_('TiVuStream versione: ') + currversion + '\n' + _('Ultimo aggiornamento ') + s1 + ' ' + _('disponibile!') + '\n' + _('ChangeLog:') + self.info)
                 self.cbUpdate = True
                 self['text'].setText(updatestr)
         except:
@@ -1489,7 +1494,7 @@ class OpenConsole(Screen):
         Screen.__init__(self, session)
         self.finishedCallback = finishedCallback
         self.closeOnSuccess = closeOnSuccess
-        self['fittitle'] = Label(_('..:: TivuStream Console ::..'))        
+        self['fittitle'] = Label(_('..:: TiVuStream Console ::..'))        
         self['text'] = ScrollLabel('')
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
@@ -1580,7 +1585,7 @@ class openMessageBox(Screen):
         f.close()          
         Screen.__init__(self, session)
         self.msgBoxID = msgBoxID
-        self['fittitle'] = Label(_('..:: TivuStream Message ::..'))  
+        self['fittitle'] = Label(_('..:: TiVuStream Message ::..'))  
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
         self['version'] = Label(_('Versione'))
@@ -1830,9 +1835,9 @@ def mainmenu(session, **kwargs):
 
 def cfgmain(menuid):
     if menuid == 'mainmenu':
-        return [('TivuStream',
+        return [('TiVuStream',
           main,
-          'TivuStream List by Lululla',
+          'TiVuStream List by Lululla',
           44)]
     else:
         return []
@@ -1845,10 +1850,10 @@ def Plugins(**kwargs):
         icona = SKIN_PATH + '/logo.png'
 
     iconaplayer = SKIN_PATH + '/player.png'
-    extDescriptor = PluginDescriptor(name='TivuStream List', description=_('TivuStream List'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, icon=icona, fnc=main)
-    mainDescriptor = PluginDescriptor(name='TivuStream List', description=_('TivuStream List v.' + currversion), where=PluginDescriptor.WHERE_MENU, icon=icona, fnc=cfgmain)
-    # result = [PluginDescriptor(name='TivuStream List', description=_('TivuStream List v.' + currversion), where=[PluginDescriptor.WHERE_PLUGINMENU], icon=icona, fnc=main), PluginDescriptor(name='TivuStream List Player', description='TivuStream List Player v.' + currversion, where=[PluginDescriptor.WHERE_PLUGINMENU], icon=iconaplayer, fnc=main2)]
-    result = [PluginDescriptor(name='TivuStream List', description=_('TivuStream List v.' + currversion), where=[PluginDescriptor.WHERE_PLUGINMENU], icon=icona, fnc=main)]
+    extDescriptor = PluginDescriptor(name='TiVuStream List', description=_('TiVuStream List'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, icon=icona, fnc=main)
+    mainDescriptor = PluginDescriptor(name='TiVuStream List', description=_('TiVuStream List v.' + currversion), where=PluginDescriptor.WHERE_MENU, icon=icona, fnc=cfgmain)
+    # result = [PluginDescriptor(name='TiVuStream List', description=_('TiVuStream List v.' + currversion), where=[PluginDescriptor.WHERE_PLUGINMENU], icon=icona, fnc=main), PluginDescriptor(name='TiVuStream List Player', description='TiVuStream List Player v.' + currversion, where=[PluginDescriptor.WHERE_PLUGINMENU], icon=iconaplayer, fnc=main2)]
+    result = [PluginDescriptor(name='TiVuStream List', description=_('TiVuStream List v.' + currversion), where=[PluginDescriptor.WHERE_PLUGINMENU], icon=icona, fnc=main)]
     if config.plugins.TivuStream.strtext.value:
         result.append(extDescriptor)
     if config.plugins.TivuStream.strtmain.value:
