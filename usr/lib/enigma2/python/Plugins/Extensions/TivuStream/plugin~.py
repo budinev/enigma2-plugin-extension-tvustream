@@ -1,8 +1,8 @@
 from Components.ActionMap import ActionMap
 from Components.AVSwitch import AVSwitch
-from Components.config import config, getConfigListEntry, ConfigInteger, ConfigSelection, ConfigSubsection, ConfigYesNo, ConfigDirectory, configfile
-from Components.config import *
-from Components.ConfigList import *
+from Components.config import config, getConfigListEntry, ConfigInteger, ConfigSelection, ConfigSubsection, ConfigYesNo
+from Components.config import configfile #, ConfigNothing, NoSave, ConfigElement, ConfigPassword, ConfigText
+from Components.ConfigList import ConfigListScreen
 from Components.Input import Input
 from Components.Label import Label
 from Components.MenuList import MenuList
@@ -29,7 +29,6 @@ from Screens.Console import Console
 from Screens.InfoBar import MoviePlayer, InfoBar
 from Screens.InfoBarGenerics import *
 from Screens.InputBox import InputBox
-from Screens.LocationBox import LocationBox
 from Screens.PluginBrowser import PluginBrowser
 from Screens.Screen import Screen
 from Screens.Standby import TryQuitMainloop, Standby
@@ -55,7 +54,7 @@ import cookielib
 
 
 currversion = '1.8'
-Version = ' 1.8 - 25.08.2019'
+Version = ' 1.8 - 19.06.2019'
 Crediti = ' Buio2005,Furlan,Lanus'
 Maintainer2 = ' @Lululla'
 #
@@ -92,31 +91,31 @@ def OnclearMem():
         system("sync")
         system("echo 3 > /proc/sys/vm/drop_caches")
         
-# def mountm3uf():
-    # pthm3uf = []
+def mountm3uf():
+    pthm3uf = []
 
-    # if os.path.isfile('/proc/mounts'):
-        # for line in open('/proc/mounts'):
-            # if '/dev/sd' in line or '/dev/disk/by-uuid/' in line or '/dev/mmc' in line or '/dev/mtdblock' in line:
-                # drive = line.split()[1].replace('\\040', ' ') + '/'
-                # if drive== "/media/hdd/" :
-                    # if not os.path.exists('/media/hdd/movie'):
-                        # system('mkdir /media/hdd/movie')
-                # if drive== "/media/usb/" :
-                    # if not os.path.exists('/media/usb/movie'):
-                        # system('mkdir /media/usb/movie')  
-                # if drive== "/omb/" :
-                    # drive = drive.replace('/media/omb/', '/media/omb/')
-                    # if not os.path.exists('/media/omb/movie'):
-                        # system('mkdir /media/omb/movie')                     
-                # if drive== "/media/ba/" :
-                    # drive = drive.replace('/media/ba/', '/media/ba/')   
-                    # if not os.path.exists('/media/ba/movie'):
-                        # system('mkdir /media/ba/movie')                      
-                # if not drive in pthm3uf: 
-                      # pthm3uf.append(drive)
-    # pthm3uf.append('/tmp/')
-    # return pthm3uf   
+    if os.path.isfile('/proc/mounts'):
+        for line in open('/proc/mounts'):
+            if '/dev/sd' in line or '/dev/disk/by-uuid/' in line or '/dev/mmc' in line or '/dev/mtdblock' in line:
+                drive = line.split()[1].replace('\\040', ' ') + '/'
+                if drive== "/media/hdd/" :
+                    if not os.path.exists('/media/hdd/movie'):
+                        system('mkdir /media/hdd/movie')
+                if drive== "/media/usb/" :
+                    if not os.path.exists('/media/usb/movie'):
+                        system('mkdir /media/usb/movie')  
+                if drive== "/omb/" :
+                    drive = drive.replace('/media/omb/', '/media/omb/')
+                    if not os.path.exists('/media/omb/movie'):
+                        system('mkdir /media/omb/movie')                     
+                if drive== "/media/ba/" :
+                    drive = drive.replace('/media/ba/', '/media/ba/')   
+                    if not os.path.exists('/media/ba/movie'):
+                        system('mkdir /media/ba/movie')                      
+                if not drive in pthm3uf: 
+                      pthm3uf.append(drive)
+    pthm3uf.append('/tmp/')
+    return pthm3uf   
 
 def isExtEplayer3Available():
     return os.path.isfile(eEnv.resolve('$bindir/exteplayer3'))   
@@ -139,12 +138,12 @@ config.plugins.TivuStream.server = ConfigSelection(default='PATBUWEB', choices=[
 config.plugins.TivuStream.code = ConfigInteger(limits=(0, 9999), default=1234)
 config.plugins.TivuStream.autoupd = ConfigYesNo(default=True)
 config.plugins.TivuStream.bouquettop = ConfigSelection(default='Bottom', choices=['Bottom', 'Top'])
-# config.plugins.TivuStream.pthm3uf = ConfigSelection(choices=mountm3uf())
-config.plugins.TivuStream.pthm3uf = ConfigDirectory(default='/media/usb/movie')
+config.plugins.TivuStream.pthm3uf = ConfigSelection(choices=mountm3uf())
 
 if streamlink == True:
     if os.path.exists('/usr/lib/enigma2/python/Plugins/SystemPlugins/ServiceApp') and isExtEplayer3Available():
         config.plugins.TivuStream.services = ConfigSelection(choices=['Gstreamer', 'Exteplayer3', 'StreamLink'])  
+
     else:
         config.plugins.TivuStream.services = ConfigSelection(default='Gstreamer', choices=['Gstreamer', 'StreamLink'])          
 
@@ -560,9 +559,9 @@ class OpenScript(Screen):
                 # os.system(cmd)  
                 filename = '/etc/enigma2/userbouquet.tivustream.tv'
                 with open(filename, 'a+') as f:
-                    nameString = "#NAME tivustream.com"
+                    nameString = "#NAME tivustream.com\n"
                     if nameString not in f:
-                        f.write(nameString + '\r\n')
+                        f.write(nameString)
 				
             os.system('chmod 0644 /etc/enigma2/userbouquet.tivustream.tv' )
 
@@ -674,7 +673,7 @@ class OpenM3u(Screen):
         self['infoc'] = Label(_('Crediti'))        
         self['infoc2'] = Label('%s' % Crediti) 
         self['info'] = Label()
-        pthm3uf = config.plugins.TivuStream.pthm3uf.value #+ '/' + 'movie' 
+        pthm3uf = config.plugins.TivuStream.pthm3uf.value + 'movie' 
         self['path'] = Label(_('Percorso cartella %s') % pthm3uf)
         self['key_red'] = Label(_('Esci'))
         self['key_green'] = Label(_('Converti StreamLink'))        
@@ -692,13 +691,13 @@ class OpenM3u(Screen):
 
         try:
 
-            if not path.exists(config.plugins.TivuStream.pthm3uf.value +  '/tivustream.m3u'):
-                cmd15 = pnd_m3ulnk + config.plugins.TivuStream.pthm3uf.value + '/tivustream.m3u > /dev/null'
+            if not path.exists(config.plugins.TivuStream.pthm3uf.value +  'movie/tivustream.m3u'):
+                cmd15 = pnd_m3ulnk + config.plugins.TivuStream.pthm3uf.value + 'movie/tivustream.m3u > /dev/null'
                 system(cmd15)
             else:
-                cmd66 = 'rm -f ' + config.plugins.TivuStream.pthm3uf.value +  '/tivustream.m3u'
+                cmd66 = 'rm -f ' + config.plugins.TivuStream.pthm3uf.value + 'movie/tivustream.m3u'
                 system(cmd66)
-                cmd15 = pnd_m3ulnk + config.plugins.TivuStream.pthm3uf.value + '/tivustream.m3u > /dev/null'
+                cmd15 = pnd_m3ulnk + config.plugins.TivuStream.pthm3uf.value + 'movie/tivustream.m3u > /dev/null'
                 system(cmd15)        
         
         except Exception as ex:
@@ -706,7 +705,7 @@ class OpenM3u(Screen):
             print 'ex download m3u player'      
 
         self['info'].setText(_('OK') + '\n' + _('Apri Selezione'))
-        self.name = config.plugins.TivuStream.pthm3uf.value + '/' #'movie/' #name
+        self.name = config.plugins.TivuStream.pthm3uf.value  + 'movie' #'movie/' #name
         self.srefOld = self.session.nav.getCurrentlyPlayingServiceReference()
         self.onLayoutFinish.append(self.openList)
 
@@ -1274,8 +1273,7 @@ class AddIpvStream(Screen):
 class OpenConfig(Screen, ConfigListScreen):
 
     def __init__(self, session):
-
-		
+        self.session = session
         if fileExists(BRAND) or fileExists(BRANDP):
             skin = SKIN_PATH + '/OpenConfigOpen.xml'
         else:
@@ -1284,11 +1282,6 @@ class OpenConfig(Screen, ConfigListScreen):
         self.skin = f.read()
         f.close()  
         Screen.__init__(self, session)
-        self.setup_title = _("TiVuStream Config")	
-        self.onChangedEntry = [ ]
-		
-        self.session = session		
-		
         info = '***'
         self['title'] = Label(_('..:: TiVuStream List V. %s  by Lululla ::..' % Version))
         self['Maintainer'] = Label(_('Maintainer'))
@@ -1301,27 +1294,27 @@ class OpenConfig(Screen, ConfigListScreen):
         # self['key_blue'] = Label(_(''))        
         self['text'] = Label(info)
         self["description"] = Label(_(''))
+        self.setup_title = _("TiVuStream Config")
+        self.onChangedEntry = [ ]
+        self.list = []
+        ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
+        self.createSetup()
         self.cbUpdate = False
-
         self["setupActions"] = ActionMap(['OkCancelActions', 'DirectionActions', 'ColorActions', 'VirtualKeyboardActions', 'ActiveCodeActions'],
         {
                 "red": self.extnok,
                 "cancel": self.extnok,
                 'yellow': self.msgupdt1,
                 "green": self.cfgok,
-                "left": self.keyLeft,
-                "right": self.keyRight,				
                 'showVirtualKeyboard': self.KeyText,
                 "ok": self.Ok_edit
-        }, -1)       
-        self.list = []	
-        ConfigListScreen.__init__(self, self.list, session = self.session, on_change = self.changedEntry)
-        self.createSetup()
-        self.checkUpdate()
+        }, -1)         
         self.onLayoutFinish.append(self.layoutFinished) 
 
-    def checkUpdate(self):
+    def layoutFinished(self):
         server_ref()
+    
+        self.setTitle(self.setup_title)        
         try:
             fp = urllib.urlopen(upd_fr_txt)
             count = 0
@@ -1356,10 +1349,11 @@ class OpenConfig(Screen, ConfigListScreen):
             self.timerx.callback.append(self.msgupdt2) #pli
         else:
             self.timerx_conn = self.timerx.timeout.connect(self.msgupdt2) #cvs 
-			
+        # try:
+            # self.timerx.callback.append(self.msgupdt2)
+        # except:
+            # self.timerx_conn = self.timerx.timeout.connect(self.msgupdt2)
 
-    def layoutFinished(self):
-        self.setTitle(self.setup_title)
 
     def createSetup(self):
         self.editListEntry = None
@@ -1409,40 +1403,6 @@ class OpenConfig(Screen, ConfigListScreen):
         ConfigListScreen.keyRight(self)
         print "current selection:", self["config"].l.getCurrentSelection()
         self.createSetup()
-		
-    def Ok_edit(self): 		
-        ConfigListScreen.keyOK(self)
-        sel = self['config'].getCurrent()[1]
-        if sel and sel == config.plugins.TivuStream.pthm3uf:
-            self.setting = 'pthm3uf'
-            print "current selection:", self["config"].l.getCurrentSelection()
-            self.openDirectoryBrowser(config.plugins.TivuStream.pthm3uf.value)
-          
-        else:
-            pass        
-		
-    def openDirectoryBrowser(self, path):
-            try:
-                self.session.openWithCallback(
-                 self.openDirectoryBrowserCB,
-                 LocationBox,
-                 windowTitle=_('Choose Directory:'),
-                 text=_('Choose directory'),
-                 currDir=str(path),
-                 bookmarks=config.movielist.videodirs,
-                 autoAdd=False,
-                 editDir=True,
-                 inhibitDirs=['/bin', '/boot', '/dev', '/home', '/lib', '/proc', '/run', '/sbin', '/sys', '/var'],
-                 minFree=15)
-            except Exception as e:
-                print ('openDirectoryBrowser get failed: ', str(e))
-
-
-    def openDirectoryBrowserCB(self, path):
-                if path is not None:
-                    if self.setting == 'pthm3uf':
-                        config.plugins.TivuStream.pthm3uf.setValue(path)
-                return	
             
     def cfgok(self):
         self.save()

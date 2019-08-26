@@ -1,34 +1,41 @@
-<screen name="openMessageBoxFHD" flags="wfNoBorder" position="0,0" size="1280,720" title="-TivuStream-" backgroundColor="#00000000">
-  <ePixmap position="0,0" zPosition="-1" size="1280,714" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/1280_720backtv.png" alphatest="blend" />
-  
-  <widget name="fittitle" position="55,14" zPosition="3" size="469,52" font="OpenFont1;29" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" halign="center" />
-  <widget name="version" position="268,674" zPosition="3" size="198,33" font="OpenFont1;21" foregroundColor="#00ff00" transparent="1" halign="right" />
-  <widget name="version2" position="466,674" halign="left" size="254,33" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
-  
+<screen name="openMessageBoxFHD" flags="wfNoBorder" position="0,0" size="1280,720" title="..::TiVuStream List Channel::.." backgroundColor="#ff000000">
+	<ePixmap position="0,0" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/menu_plug_HD.png" zPosition="-1" />  
+	<widget name="title" position="33,30" size="1066,33" font="Regular;24" foregroundColor="#ffcc33" backgroundColor="black" transparent="1" zPosition="3" />
+	<widget source="global.CurrentTime" render="Label" position="1053,16" size="200,33" font="Regular;20" halign="right" valign="center" backgroundColor="black" foregroundColor="grey" transparent="1">
+		<convert type="ClockToText">Format:%d.%m.%Y</convert>
+	</widget>
+	<widget source="global.CurrentTime" render="Label" position="1053,46" size="200,33" font="Regular;20" halign="right" backgroundColor="black" transparent="1">
+		<convert type="ClockToText">Default</convert>
+	</widget>
+	<ePixmap position="0,73" size="1280,1" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sep2.png" alphatest="blend" transparent="1" zPosition="1" />
+	<!-- PIG CHANNEL --> 
+	<eLabel position="33,86" size="480,282" backgroundColor="#1b3c85" />
+	<eLabel position="36,90" size="473,275" backgroundColor="#20000000" />
+	<eLabel position="43,96" size="460,262" backgroundColor="#FFFFFFFF" />
+	<widget source="session.VideoPicture" render="Pig" position="48,100" size="453,255" backgroundColor="#AA001842" transparent="1" zPosition="2" />
+	
   <widget name="infoc" position="714,674" size="150,33" font="OpenFont1;21" halign="right" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" zPosition="3" />
   <widget name="infoc2" position="866,674" halign="left" size="396,33" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
   
   <widget name="Maintainer" position="8,674" halign="right" size="150,33" zPosition="3" font="OpenFont1;21" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" />
   <widget name="Maintainer2" position="158,674" halign="left" size="166,33" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
   
-  <ePixmap position="949,3" zPosition="1" size="213,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/logosk.png" alphatest="blend" />
-  <widget source="session.VideoPicture" render="Pig" position="677,139" size="534,260" backgroundColor="transparent" zPosition="3" />
+  <ePixmap position="36,374" zPosition="1" size="213,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/logosk.png" alphatest="blend" />
+  
   
   <widget name="ErrorPixmap" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/input_error.png" position="548,96" size="36,36" alphatest="blend" />
   <widget name="QuestionPixmap" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/input_question.png" position="547,95" size="36,36" alphatest="blend" />
   <widget name="InfoPixmap" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/input_info.png" position="546,98" size="36,36" alphatest="blend" />
   <widget name="WarningPixmap" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/input_warning.png" position="548,98" size="36,36" alphatest="blend" />
   
-  <!--
-  <widget name="list" position="55,66" size="466,333" itemHeight="24" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel32_1060.png" foregroundColor="#fff700" transparent="1" zPosition="10" />
-  -->
-  <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" position="159,138" size="433,333" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="33" transparent="1" />  
+
+  <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" position="582,103" size="662,450" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="33" transparent="1" />  
 
     
-  <widget name="Text" font="Regular;20" position="160,232" size="462,205" foregroundColor="yellow" backgroundColor="blue" transparent="1" zPosition="10" />
-  <widget name="text" font="Regular;20" position="158,223" size="463,219" foregroundColor="yellow" backgroundColor="blue" transparent="1" zPosition="10" />
+  <widget name="Text" font="Regular;20" position="667,208" size="462,205" foregroundColor="yellow" backgroundColor="blue" transparent="1" zPosition="10" />
+  <widget name="text" font="Regular;20" position="673,219" size="463,219" foregroundColor="yellow" backgroundColor="blue" transparent="1" zPosition="10" />
   
-  <widget name="selectedChoice" position="162,442" zPosition="3" size="497,101" font="Regular;21" transparent="1" foregroundColor="#660000" backgroundColor="blue" foregroundColorSelected="yellow" halign="center" />
+  <widget name="selectedChoice" position="666,445" zPosition="3" size="497,101" font="Regular;21" transparent="1" foregroundColor="#660000" backgroundColor="blue" foregroundColorSelected="yellow" halign="center" />
   <applet type="onLayoutFinish">
 <!-- # this should be factored out into some helper code, but currently demonstrates applets.
 from enigma import eSize, ePoint
