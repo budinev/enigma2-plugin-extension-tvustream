@@ -1,4 +1,4 @@
-<screen name="OpenScriptFHD" flags="wfNoBorder" position="0,0" size="1280,720" title="..::TiVuStream List Channel::.." backgroundColor="#ff000000">
+<screen name="OpenScriptHD" flags="wfNoBorder" position="0,0" size="1280,720" title="..::TiVuStream List Channel::.." backgroundColor="#ff000000">
 	<ePixmap position="0,0" size="1280,720" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/menu_plug_HD.png" zPosition="-1" />  
 	<widget name="title" position="33,30" size="1066,33" font="Regular;24" foregroundColor="#ffcc33" backgroundColor="black" transparent="1" zPosition="3" />
 	<widget source="global.CurrentTime" render="Label" position="1053,16" size="200,33" font="Regular;20" halign="right" valign="center" backgroundColor="black" foregroundColor="grey" transparent="1">
@@ -13,14 +13,15 @@
 	<eLabel position="36,90" size="473,275" backgroundColor="#20000000" />
 	<eLabel position="43,96" size="460,262" backgroundColor="#FFFFFFFF" />
 	<widget source="session.VideoPicture" render="Pig" position="48,100" size="453,255" backgroundColor="#AA001842" transparent="1" zPosition="2" />
-	
+
   <widget name="infoc" position="714,674" size="150,33" font="OpenFont1;21" halign="right" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" zPosition="3" />
   <widget name="infoc2" position="866,674" halign="left" size="396,33" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
+  <widget name="listUpdate" position="37,507" halign="left" size="506,77" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
   
   <widget name="Maintainer" position="8,674" halign="right" size="150,33" zPosition="3" font="OpenFont1;21" foregroundColor="#00ff00" backgroundColor="#00000000" transparent="1" />
   <widget name="Maintainer2" position="158,674" halign="left" size="166,33" zPosition="3" font="OpenFont1;21" foregroundColor="#ffff00" backgroundColor="#00000000" transparent="1" />
   
-  <ePixmap position="36,374" zPosition="1" size="213,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/logosk.png" alphatest="blend" />
+  <ePixmap position="36,374" zPosition="1" size="213,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/logosk.png" alphatest="blend" />  
 
   <widget name="key_red" position="8,597" zPosition="3" size="220,56" font="OpenFont2;26" halign="center" foregroundColor="red" transparent="1" />
   <widget name="key_yellow" position="449,597" zPosition="3" size="220,56" font="OpenFont2;26" halign="center" foregroundColor="yellow" transparent="1" />
@@ -34,8 +35,5 @@
   <eLabel position="672,654" size="220,6" backgroundColor="blue" zPosition="1" />
   <eLabel position="892,654" size="220,6" backgroundColor="white" zPosition="1" />
 
-  <widget name="list" position="159,138" size="266,333"  
-    foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand"  selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" 
-    itemHeight="33" transparent="1" />  
-
+ <widget name="list" position="582,103" size="662,450" font="OpenFont2;26" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="33" transparent="1" />  
 </screen>

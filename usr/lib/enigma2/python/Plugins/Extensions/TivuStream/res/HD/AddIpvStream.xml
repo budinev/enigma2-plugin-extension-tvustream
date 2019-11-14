@@ -22,10 +22,9 @@
   
   <ePixmap position="36,374" zPosition="1" size="213,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/logosk.png" alphatest="blend" />
   
-  <widget name="menu" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" position="582,103" size="662,450"
-    foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" 
-    itemHeight="33" transparent="1" />    
-
+  <widget name="menu" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" position="582,103" size="662,450" font="OpenFont2;22" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="33" transparent="1" />      
+  
   <widget name="statusbar" render="Label" position="680,596" zPosition="3" size="480,33" font="OpenFont2;26" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" halign="center" />
 
+ 
 </screen>

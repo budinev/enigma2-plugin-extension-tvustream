@@ -22,6 +22,7 @@
   
   <ePixmap position="36,374" zPosition="1" size="213,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/logosk.png" alphatest="blend" />
   
+
   <widget name="key_red" position="8,597" zPosition="3" size="220,56" font="OpenFont2;26" halign="center" foregroundColor="red" transparent="1" />
   <widget name="key_yellow" position="449,597" zPosition="3" size="220,56" font="OpenFont2;26" halign="center" foregroundColor="yellow" transparent="1" />
   <widget name="key_green" position="227,597" zPosition="3" size="220,56" font="OpenFont2;26" halign="center" foregroundColor="green" transparent="1" />
@@ -30,7 +31,9 @@
   <eLabel position="229,654" size="220,6" backgroundColor="green" zPosition="1" />
   <eLabel position="451,654" size="220,6" backgroundColor="yellow" zPosition="1" />
 
-  <widget name="config" position="582,103" size="662,450" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="33" transparent="1" />  
+  <widget name="config" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" position="582,103" size="662,450" font="OpenFont2;21"
+    foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" 
+    itemHeight="33" transparent="1" />    
     
   <widget name="text" position="38,448" size="522,142" font="Regular;20" foregroundColor="#ffff00" transparent="1" zPosition="4" />
   <widget name="description" position="598,505" size="646,86" font="Regular; 24" foregroundColor="#ffff00" transparent="1" zPosition="4" />

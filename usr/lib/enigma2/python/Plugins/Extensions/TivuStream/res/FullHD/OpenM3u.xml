@@ -35,8 +35,10 @@
   <eLabel position="1338,982" size="330,10" backgroundColor="white" zPosition="1" />
 
 
+  <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/FullHD/sel50_1060.png" position="874,155" size="994,676" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" transparent="1" />    
+<!-- 
   <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/FullHD/sel50_1060.png" position="874,155" size="994,676" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="50" transparent="1" />    
-    
+ -->    
   <widget name="path" position="87,722" zPosition="3" size="716,63" font="OpenFont1;34" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" halign="right" />
 
 </screen>

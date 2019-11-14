@@ -33,7 +33,10 @@
     <eLabel position="451,654" size="220,6" backgroundColor="yellow" zPosition="1" />
     <eLabel position="672,654" size="220,6" backgroundColor="blue" zPosition="1" />
     <eLabel position="892,654" size="220,6" backgroundColor="white" zPosition="1" />
-    <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" position="582,103" size="662,450" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="33" transparent="1" />    
+    <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" position="582,103" size="662,450" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" transparent="1" />    
+	
+	
+    <!-- <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" position="582,103" size="662,450" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="33" transparent="1" />     -->
     <widget name="path" position="58,481" zPosition="3" size="477,42" font="OpenFont1;22" foregroundColor="#ff9900" backgroundColor="#00000000" transparent="1" halign="right" />
 
 </screen>
