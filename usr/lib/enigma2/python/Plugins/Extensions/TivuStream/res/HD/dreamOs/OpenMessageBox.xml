@@ -23,17 +23,20 @@
   <ePixmap position="36,374" zPosition="1" size="213,100" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/logosk.png" alphatest="blend" />
 
 
-  <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" position="526,289" size="722,230" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="33" transparent="1" />  
+  <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" position="526,289" size="722,230" zPosition="3" scrollbarMode="showOnDemand" itemHeight="33" transparent="1" />  
 	<!-- List Channel -->
-	<widget name="Text" position="525,187" size="720,88" font="Regular;24" transparent="1" zPosition="1" foregroundColor="#7ac2fc" foregroundColorSelected="#f4b700" />
-	<widget name="text" position="527,97" size="720,86" font="Regular;24" transparent="1" zPosition="1" foregroundColor="#7ac2fc" foregroundColorSelected="#f4b700" />
+	<widget name="Text" position="525,187" size="720,88" font="Regular;24" transparent="1" zPosition="1" foregroundColor="#7ac2fc"/>
+	<widget name="text" position="527,97" size="720,86" font="Regular;24" transparent="1" zPosition="1" foregroundColor="#7ac2fc"/>
 
 	<widget name="selectedChoice" position="547,573" size="533,33" font="Regular;22" foregroundColor="#ffffff" backgroundColor="#2518252e" transparent="1" zPosition="3" />
 
 	<widget name="ErrorPixmap" pixmap="skin_default/icons/input_error.png" position="1186,86" size="66,66" alphatest="blend" />
 	<widget name="QuestionPixmap" pixmap="skin_default/icons/input_question.png" position="1186,86" size="66,66" alphatest="blend" />
 	<widget name="InfoPixmap" pixmap="skin_default/icons/input_info.png" position="1186,86" size="66,66" alphatest="blend" />
+<!--	
 	<widget name="WarningPixmap" pixmap="skin_default/icons/input_warning.png" position="1186,86" size="66,66" alphatest="blend" />   
+-->	
+
 	<applet type="onLayoutFinish">
 <!-- # this should be factored out into some helper code, but currently demonstrates applets.
 from enigma import eSize, ePoint

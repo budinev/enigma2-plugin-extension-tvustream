@@ -22,11 +22,11 @@
   
   <ePixmap position="55,561" zPosition="1" size="320,150" pixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/FullHD/logosk.png" alphatest="blend" />
 
-  <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/FullHD/sel50_1060.png" position="798,451" size="1073,206" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="50" transparent="1" />  
+  <widget name="list" selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/FullHD/sel50_1060.png" position="798,451" size="1073,206" zPosition="3" scrollbarMode="showOnDemand" itemHeight="50" transparent="1" />  
 
 	<!-- List Channel -->
-	<widget name="Text" position="789,131" size="1080,133" font="Regular;36" transparent="1" zPosition="1" foregroundColor="#7ac2fc" foregroundColorSelected="#f4b700" />
-	<widget name="text" position="790,274" size="1080,130" font="Regular;36" transparent="1" zPosition="1" foregroundColor="#7ac2fc" foregroundColorSelected="#f4b700" />
+	<widget name="Text" position="789,131" size="1080,133" font="Regular;36" transparent="1" zPosition="1" foregroundColor="#7ac2fc" />
+	<widget name="text" position="790,274" size="1080,130" font="Regular;36" transparent="1" zPosition="1" foregroundColor="#7ac2fc" />
 <!-- 	
 	<widget name="list" position="792,416" size="1080,200" font="Regular;34" itemHeight="50" scrollbarMode="showOnDemand" transparent="1" zPosition="1" foregroundColor="#7ac2fc" foregroundColorSelected="#f4b700" />
  -->
@@ -35,7 +35,10 @@
 	<widget name="ErrorPixmap" pixmap="skin_default/icons/input_error.png" position="1780,130" size="100,100" alphatest="blend" />
 	<widget name="QuestionPixmap" pixmap="skin_default/icons/input_question.png" position="1780,130" size="100,100" alphatest="blend" />
 	<widget name="InfoPixmap" pixmap="skin_default/icons/input_info.png" position="1780,130" size="100,100" alphatest="blend" />
-	<widget name="WarningPixmap" pixmap="skin_default/icons/input_warning.png" position="1780,130" size="100,100" alphatest="blend" />  <applet type="onLayoutFinish">
+<!-- 	
+	<widget name="WarningPixmap" pixmap="skin_default/icons/input_warning.png" position="1780,130" size="100,100" alphatest="blend" />  
+ -->	
+	<applet type="onLayoutFinish">
 <!-- # this should be factored out into some helper code, but currently demonstrates applets.
 from enigma import eSize, ePoint
 orgwidth = self.instance.size().width()

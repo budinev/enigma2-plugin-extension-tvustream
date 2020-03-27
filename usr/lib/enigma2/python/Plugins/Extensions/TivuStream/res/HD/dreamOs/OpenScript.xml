@@ -36,7 +36,7 @@
   <eLabel position="892,654" size="220,6" backgroundColor="white" zPosition="1" />
 
   <widget name="list" position="159,138" size="266,333"  
-    foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand"  selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" 
+    zPosition="3" scrollbarMode="showOnDemand"  selectionPixmap="/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/res/HD/sel50_1060.png" 
     itemHeight="33" transparent="1" />  
 
 </screen>

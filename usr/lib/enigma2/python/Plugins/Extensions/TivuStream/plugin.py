@@ -1,7 +1,7 @@
 #"****************************************"
 #"*    by Lululla                        *"
 #"*     skin by MMark                    *"          
-#"*     16/08/2019                       *"
+#"*       08/02/2020                     *"
 #"****************************************"
 from Components.AVSwitch import AVSwitch
 from Components.ActionMap import ActionMap
@@ -32,6 +32,7 @@ from Screens.InfoBar import MoviePlayer, InfoBar
 from Screens.InfoBarGenerics import *
 from Screens.InputBox import InputBox
 from Screens.LocationBox import LocationBox
+from Screens.MessageBox import MessageBox
 from Screens.PluginBrowser import PluginBrowser
 from Screens.Screen import Screen
 from Screens.Standby import TryQuitMainloop, Standby
@@ -61,39 +62,37 @@ import shutil
 import time
 import urllib
 import urllib2
-currversion = '1.9'
-Version     = ' 1.9 - 20.10.2019'
-Credits     = ' Buio2005,Furlan,Lanus'
+
+currversion = '2.0'
+Version     = ' 2.0 - 08.02.2020'
+Credits     = ' http://t.me/tivustream'
 Maintainer2 = ' @Lululla'
 plugin_path = '/usr/lib/enigma2/python/Plugins/Extensions/TivuStream/'
 dir_enigma2 = '/etc/enigma2/'
-
-
-addFont(plugin_path + 'res/fonts/verdana_r.ttf', 'OpenFont1', 100, 1)
-addFont(plugin_path + 'res/fonts/showg.ttf', 'OpenFont2', 100, 1)
 service_types_tv = '1:7:1:0:0:0:0:0:0:0:(type == 1) || (type == 17) || (type == 22) || (type == 25) || (type == 134) || (type == 195)'
 
-global g_oeVersion
-oeVersion   = "oe20"
-g_oeVersion = oeVersion
-def getOeVersion():
-	if g_oeVersion is None:
-		setOeVersion()
-	return g_oeVersion
-def  setOeVersion():
-	if (2, 6, 8) > sys.version_info > (2, 6, 6):
-		oeVersion = "oe16"
-	if (2, 7, 4) > sys.version_info > (2, 7, 0):
-		oeVersion = "oe20"
-		try:
-			from enigma import eMediaDatabase
-			oeVersion = "oe22"
-		except:
-			pass
-	global g_oeVersion
-	g_oeVersion = oeVersion
 #================ 
+global isDreamOS
+isDreamOS = False
+try:
+	from enigma import eMediaDatabase
+	isDreamOS = True
+except:
+	isDreamOS = False
+#======================================================
+try:
+    from enigma import eDVBDB
+except ImportError:
+    eDVBDB = None    
+#======================================================    
 
+
+
+
+def add_skin_font():
+	font_path = plugin_path + 'res/fonts/'
+	addFont(font_path + 'verdana_r.ttf', 'OpenFont1', 100, 1)
+	addFont(font_path + 'showg.ttf', 'OpenFont2', 100, 1)
 
 def checkInternet():
     try:
@@ -109,8 +108,13 @@ def checkInternet():
         return True
 #
 def ReloadBouquet():
-    eDVBDB.getInstance().reloadServicelist()
-    eDVBDB.getInstance().reloadBouquets() 
+        print '\n----Reloading bouquets----'
+        if eDVBDB:
+            eDVBDB.getInstance().reloadBouquets()
+            print 'bouquets reloaded...'
+        else:
+            os.system('wget -qO - http://127.0.0.1/web/servicelistreload?mode=2 > /dev/null 2>&1 &')
+            print 'bouquets reloaded...'
 
 def OnclearMem():
         os.system("sync")
@@ -120,9 +124,9 @@ def isExtEplayer3Available():
     return os.path.isfile(eEnv.resolve('$bindir/exteplayer3'))   
 
 def isStreamlinkAvailable():
-    return os.path.isdir(eEnv.resolve('/usr/lib/python2.7/site-packages/streamlink'))  
+    return os.path.isdir(eEnv.resolve('/usr/lib/python2.7/site-packages/streamlink')) 
 
-    
+        
 if os.path.exists('/usr/lib/python2.7/site-packages/streamlink'):
     if fileExists('/usr/lib/python2.7/site-packages/streamlink/plugin/plugin.pyo'):
         streamlink = True
@@ -133,24 +137,24 @@ else:
     
 sessions = []
 config.plugins.TivuStream = ConfigSubsection()
-config.plugins.TivuStream.autoupd    = ConfigYesNo(default=True)
-config.plugins.TivuStream.pthm3uf    = ConfigDirectory(default='/media/usb/movie')
-config.plugins.TivuStream.code       = ConfigInteger(limits=(0, 9999), default=1234)
-config.plugins.TivuStream.bouquettop = ConfigSelection(default='Bottom', choices=['Bottom', 'Top'])
-config.plugins.TivuStream.server     = ConfigSelection(default='PATBUWEB', choices=['PATBUWEB', 'CORVOBOYS'])
+config.plugins.TivuStream.autoupd          = ConfigYesNo(default=True)
+config.plugins.TivuStream.pthm3uf          = ConfigDirectory(default='/media/usb/movie')
+config.plugins.TivuStream.code             = ConfigInteger(limits=(0, 9999), default=1234)
+config.plugins.TivuStream.bouquettop       = ConfigSelection(default='Bottom', choices=['Bottom', 'Top'])
+config.plugins.TivuStream.server           = ConfigSelection(default='PATBUWEB', choices=['PATBUWEB', 'CORVOBOYS'])
 
 if streamlink == True:
     if os.path.exists('/usr/lib/enigma2/python/Plugins/SystemPlugins/ServiceApp') and isExtEplayer3Available():
-        config.plugins.TivuStream.services = ConfigSelection(choices=['Gstreamer', 'Exteplayer3', 'StreamLink'])  
+        config.plugins.TivuStream.services = ConfigSelection(choices=['Default','Gstreamer', 'Exteplayer3', 'StreamLink'])  
     else:
-        config.plugins.TivuStream.services = ConfigSelection(default='Gstreamer', choices=['Gstreamer', 'StreamLink'])          
+        config.plugins.TivuStream.services = ConfigSelection(default='Default', choices=['Default','Gstreamer', 'StreamLink'])          
 else:
     if os.path.exists ('/usr/lib/enigma2/python/Plugins/SystemPlugins/ServiceApp') and isExtEplayer3Available():
-        config.plugins.TivuStream.services = ConfigSelection(default='Gstreamer', choices=['Gstreamer', 'Exteplayer3'])
+        config.plugins.TivuStream.services = ConfigSelection(default='Default', choices=['Default','Gstreamer', 'Exteplayer3'])
     else: 
-        config.plugins.TivuStream.services = ConfigSelection(default='Gstreamer', choices=[('Gstreamer')])
-config.plugins.TivuStream.strtext = ConfigYesNo(default=True)
-config.plugins.TivuStream.strtmain = ConfigYesNo(default=True)
+        config.plugins.TivuStream.services = ConfigSelection(default='Default', choices=[('Default','Gstreamer')])
+config.plugins.TivuStream.strtext          = ConfigYesNo(default=True)
+config.plugins.TivuStream.strtmain         = ConfigYesNo(default=True)
 
 
 def server_ref():
@@ -190,17 +194,18 @@ global SKIN_PATH
 SKIN_PATH = plugin_path
 HD = getDesktop(0).size()
 
+HD = getDesktop(0).size()
 if HD.width() > 1280:
-    if getOeVersion() != "oe22":
-        SKIN_PATH = plugin_path + 'res/FullHD'
-    else:
-        SKIN_PATH = plugin_path + 'res/FullHD/dreamOs'
+    if isDreamOS:
+        SKIN_PATH = plugin_path + '/res/FullHD/dreamOs' 
+    else:        
+        SKIN_PATH = plugin_path + '/res/FullHD'
 else:
-    if getOeVersion() != "oe22":
-        SKIN_PATH = plugin_path + 'res/HD'
-    else:   
-        SKIN_PATH = plugin_path + 'res/HD/dreamOs'   
-   
+    if isDreamOS:    
+        SKIN_PATH = plugin_path + '/res/HD/dreamOs'     
+    else:       
+        SKIN_PATH = plugin_path + '/res/HD'
+  
 def remove_line(filename, what):
     if os.path.isfile(filename):
         file_read = open(filename).readlines()
@@ -210,14 +215,23 @@ def remove_line(filename, what):
                 file_write.write(line)
         file_write.close()
 
+
 def DownloadInfo(url):
-        print "Here in getUrl url =", url
-        req = urllib2.Request(url)
-        req.add_header('User-Agent', 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-GB; rv:1.9.0.3) Gecko/2008092417 Firefox/3.0.3')
-        response = urllib2.urlopen(req)
-        link=response.read()
-        response.close()
-        return link    
+	try:
+		req = urllib2.Request(url)
+		req.add_header('User-Agent', 'Mozilla/5.0 (Windows NT 6.1; WOW64; rv:19.0) Gecko/20100101 Firefox/19.0')
+		response = urllib2.urlopen(req)	  
+		link = response.read()
+		response.close()  
+		return link
+	except urllib2.URLError, e:
+		print 'We failed to open "%s".' % url
+		if hasattr(e, 'code'):
+			print 'We failed with error code - %s.' % e.code	
+		if hasattr(e, 'reason'):
+			print 'We failed to reach a server.'
+			print 'Reason: ', e.reason
+            
 #================
         
 def m3ulistEntry(download):
@@ -310,12 +324,11 @@ class OpenScript(Screen):
         self['list'] = tvList([])
         self.icount = 0
         server_ref() 
-        
         self['listUpdate'] = Label()           
         self['title'] = Label(_('..:: TiVuStream List V. %s  by Lululla ::..' % Version))
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
-        self['infoc'] = Label(_('Credits'))        
+        self['infoc'] = Label(_('Info'))        
         self['infoc2'] = Label('%s' % Credits) 
         self['key_red'] = Label(_('Exit'))
         self['key_green'] = Label(_('Reload Bouquet'))
@@ -334,7 +347,6 @@ class OpenScript(Screen):
          'blue': self.M3uPlay,
          'back': self.close,
          'cancel': self.close}, -1)  
-
         self.onFirstExecBegin.append(self.checkList)
         self.onLayoutFinish.append(self.updateMenuList)
         #self.onShown.append (self.checkList)           
@@ -345,10 +357,11 @@ class OpenScript(Screen):
         self['listUpdate'].setText(_('Check List Update wait please...'))
         self.timer = eTimer()
         self.timer.start(100, 1)        
-        if getOeVersion() != "oe22":
-            self.timer.callback.append(self.listCheck) #pli
+        if isDreamOS:
+            self.timer_conn = self.timer.timeout.connect(self.listCheck)
         else:
-            self.timer_conn = self.timer.timeout.connect(self.listCheck) #cvs          
+            self.timer.callback.append(self.listCheck) 
+
 
     def listCheck(self):
         URL = (upd_nt_txt)
@@ -422,7 +435,7 @@ class OpenScript(Screen):
                 self.mbox = self.session.open(openMessageBox, _('StreamLink not installed !!! Install first'), openMessageBox.TYPE_INFO, timeout=9) 
                 return                
                 
-        if name == 'tivustream_adultxxx': # and int(pin) != str(config.plugins.TivuStream.code.value) : 
+        if name == 'tivustream_adultxxx': 
                 if  int(pin) != pin2: 
                     self.mbox = self.session.open(openMessageBox, _('You are not allowed!'), openMessageBox.TYPE_INFO, timeout=9)  
                     return                     
@@ -459,13 +472,19 @@ class OpenScript(Screen):
             with open('/etc/enigma2/bouquets.tv', 'a+') as f:
                 bouquetTvString = '#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "' + groupname +  '" ORDER BY bouquet\n'
                 if bouquetTvString not in f:
-
                     new_bouquet = open('/etc/enigma2/new_bouquets.tv', 'w')
                     file_read = open('/etc/enigma2/%s' % bouquet).readlines()                          
                     if config.plugins.TivuStream.bouquettop.value == 'Top': 
                         #top  
-                        new_bouquet.write('#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "' + groupname +  '" ORDER BY bouquet\n')   
-                        for line in file_read:
+                        # new_bouquet.write('#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "' + groupname +  '" ORDER BY bouquet\n')   
+                        ###########
+                        new_bouquet.write('#NAME User - bouquets (TV)\n')
+                        new_bouquet.write('#SERVICE 1:7:1:0:0:0:0:0:0:0:FROM BOUQUET "userbouquet.terrestrial.tv" ORDER BY bouquet\n')
+                        # file_read = open('/etc/enigma2/bouquets.tv').readlines() 
+                        for line in file_read: 
+                            if line.startswith("#NAME"):
+                                continue                        
+                        # for line in file_read:
                             new_bouquet.write(line)
                         new_bouquet.close()
                     if config.plugins.TivuStream.bouquettop.value == 'Bottom':
@@ -526,11 +545,14 @@ class OpenScript(Screen):
                         print 'permantly remove file ', radio
                         os.remove(radio)
                         os.system("sed -i '/subbouquet.tivustream/d' /etc/enigma2/bouquets.radio")
-            self.reloadSettings2()          
-
-    def reloadSettings2(self):
-        ReloadBouquet()
-        self.mbox = self.session.open(openMessageBox, _('TiVuStream channel lists successfully deleted'), openMessageBox.TYPE_INFO, timeout=4)
+                        
+            # self.reloadSettings2()     
+            self.mbox = self.session.open(openMessageBox, _('TiVuStream channel lists successfully deleted'), openMessageBox.TYPE_INFO, timeout=4)            
+            ReloadBouquet()
+        
+    # def reloadSettings2(self):
+        # ReloadBouquet()
+        # self.mbox = self.session.open(openMessageBox, _('TiVuStream channel lists successfully deleted'), openMessageBox.TYPE_INFO, timeout=4)
 
     def M3uPlay(self):
         self.session.open(OpenM3u)
@@ -556,7 +578,7 @@ class OpenM3u(Screen):
         self['title'] = Label(_('..:: TiVuStream List V. %s  by Lululla ::..' % Version))
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
-        self['infoc'] = Label(_('Credits'))        
+        self['infoc'] = Label(_('Info'))        
         self['infoc2'] = Label('%s' % Credits) 
         self['info'] = Label()
         pthm3uf = config.plugins.TivuStream.pthm3uf.value #+ '/' + 'movie' 
@@ -575,21 +597,27 @@ class OpenM3u(Screen):
          'cancel': self.cancel,
          'ok': self.runList}, -2)
         self.convert = False
-
         try:
 
-            if not path.exists(config.plugins.TivuStream.pthm3uf.value +  '/tivustream.m3u'):
-                cmd15 = pnd_m3ulnk + config.plugins.TivuStream.pthm3uf.value + '/tivustream.m3u > /dev/null'
-                os.system(cmd15)
-            else:
-                cmd66 = 'rm -f ' + config.plugins.TivuStream.pthm3uf.value +  '/tivustream.m3u'
-                os.system(cmd66)
-                cmd15 = pnd_m3ulnk + config.plugins.TivuStream.pthm3uf.value + '/tivustream.m3u > /dev/null'
-                os.system(cmd15)        
+            # if not path.exists(config.plugins.TivuStream.pthm3uf.value +  'tivustream.m3u'):
+                # cmd15 = pnd_m3ulnk + config.plugins.TivuStream.pthm3uf.value + 'tivustream.m3u > /dev/null'
+                # print 'cmd15: ', cmd15
+                # os.system(cmd15)
+            # else:
+                # cmd66 = 'rm -f ' + config.plugins.TivuStream.pthm3uf.value +  'tivustream.m3u'
+                # os.system(cmd66)
+                # print 'cmd66: ', cmd66
+                # cmd15 = pnd_m3ulnk + config.plugins.TivuStream.pthm3uf.value + 'tivustream.m3u > /dev/null'
+                # os.system(cmd15)   
+            cmd66 = 'rm -f ' + config.plugins.TivuStream.pthm3uf.value +  'tivustream.m3u'
+            os.system(cmd66)
+            print 'cmd66: ', cmd66
+            cmd15 = pnd_m3ulnk + config.plugins.TivuStream.pthm3uf.value + 'tivustream.m3u > /dev/null'
+            os.system(cmd15)                 
         
         except Exception as ex:
             print ex
-            print 'ex download m3u player'      
+            print 'ex error download tivustream m3u'      
 
         self['info'].setText(_('OK') + '\n' + _('Open Selection'))
         self.name = config.plugins.TivuStream.pthm3uf.value + '/' 
@@ -842,7 +870,7 @@ class M3uPlay(Screen):
         self['title'] = Label(_('..:: TiVuStream List V. %s  by Lululla ::..' % Version))
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
-        self['infoc'] = Label(_('Credits'))        
+        self['infoc'] = Label(_('Info'))        
         self['infoc2'] = Label('%s' % Credits) 
         service = config.plugins.TivuStream.services.value 
         self['service'] = Label(_('Service Reference used %s') % service)        
@@ -894,7 +922,9 @@ class M3uPlay(Screen):
             url = self.urls[idx]
             self.session.open(M3uPlay2, name, url)
             return
-            
+
+#'Gstreamer', 'Exteplayer3', 'StreamLink'
+#("1", _("DVB(1)")), ("4097", _("IPTV(4097)")), ("5001", _("GStreamer(5001)")),("5002", "Exteplayer3(5002)")            
     def runPreview(self):
         idx = self['list'].getSelectionIndex()
         if idx == -1 or None:
@@ -905,19 +935,26 @@ class M3uPlay(Screen):
             url = url.replace(':', '%3a')
             self.url = url
             self.name = name
-            if ".ts" in self.url: 
+            if ".ts" or ".mp4" or ".avi" in self.url:  
                 ref = '4097:0:1:0:0:0:0:0:0:0:' + url
                 print "ref ts= ", ref        
             else:
                 if config.plugins.TivuStream.services.value == 'Gstreamer':
-                    ref = '4097:0:1:0:0:0:0:0:0:0:' + url
-                    print "ref 4097= ", ref
+                    ref = '5001:0:1:0:0:0:0:0:0:0:' + url
+                    print "ref 5001= ", ref
+                    
+                elif config.plugins.TivuStream.services.value == 'Exteplayer3':
+                    ref = '5002:0:1:0:0:0:0:0:0:0:' + url
+                    print "ref= ", ref                       
+                    
                 elif config.plugins.TivuStream.services.value == 'StreamLink':
                     ref = '5002:0:1:0:0:0:0:0:0:0:http%3a//127.0.0.1%3a8088/' + url
                     print "ref= ", ref                    
                 else:
-                    ref = '5002:0:1:0:0:0:0:0:0:0:' + url
-                    print "ref 5002= ", ref
+                    ref = '4097:0:1:0:0:0:0:0:0:0:' + url
+                    print "nO .TS ref 4097= ", ref
+                    
+                    
             sref = eServiceReference(ref)
             sref.setName(self.name)
             self.session.nav.stopService()
@@ -988,16 +1025,19 @@ class M3uPlay2(Screen, InfoBarMenu, InfoBarBase, InfoBarSeek, InfoBarNotificatio
             print "ref1= ", ref        
         else:
             if config.plugins.TivuStream.services.value == 'Gstreamer':
-                ref = '4097:0:1:0:0:0:0:0:0:0:' + url
+                ref = '5001:0:1:0:0:0:0:0:0:0:' + url
                 print "ref2= ", ref
                 
+            elif config.plugins.TivuStream.services.value == 'Exteplayer3':
+                ref = '5002:0:1:0:0:0:0:0:0:0:' + url
+                print "ref3= ", ref                   
             elif config.plugins.TivuStream.services.value == 'StreamLink':
                 ref = '5002:0:1:0:0:0:0:0:0:0:http%3a//127.0.0.1%3a8088/' + url
                 print "ref3= ", ref   
-                    
             else:
-                ref = '5002:0:1:0:0:0:0:0:0:0:' + url
+                ref = '4097:0:1:0:0:0:0:0:0:0:' + url
                 print "ref4= ", ref
+                
         sref = eServiceReference(ref)
         sref.setName(self.name)
         self.session.nav.stopService()
@@ -1045,10 +1085,9 @@ class AddIpvStream(Screen):
         self['title'] = Label(_('..:: TiVuStream List V. %s  by Lululla ::..' % Version))
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2) 
-        self['infoc'] = Label(_('Credits'))        
+        self['infoc'] = Label(_('Info'))        
         self['infoc2'] = Label('%s' % Credits) 
         self['actions'] = ActionMap(['SetupActions', 'ColorActions'], {'ok': self.keyOk,
-        
          'blue': self.keyOk,
          'cancel': self.keyCancel,
          'green': self.keyOk,
@@ -1163,7 +1202,7 @@ class OpenConfig(Screen, ConfigListScreen):
         self['title'] = Label(_('..:: TiVuStream List V. %s  by Lululla ::..' % Version))
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2) 
-        self['infoc'] = Label(_('Credits'))        
+        self['infoc'] = Label(_('Info'))        
         self['infoc2'] = Label('%s' % Credits) 
         self['key_red'] = Label(_('Exit'))
         self['key_yellow'] = Label(_('Update'))
@@ -1219,12 +1258,11 @@ class OpenConfig(Screen, ConfigListScreen):
             self.cbUpdate = False
             self['text'].setText(_('No updates available') + '\n' + _('No internet connection or server OFF') + '\n' + _('Please try again later or change SERVER to config menu.'))
         self.timerx = eTimer()
-        self.timerx.start(100, 1)		
-
-        if getOeVersion() != "oe22":
-            self.timerx.callback.append(self.msgupdt2) #pli
+        self.timerx.start(100, 1)	
+        if isDreamOS:
+            self.timerx_conn = self.timerx.timeout.connect(self.msgupdt2)
         else:
-            self.timerx_conn = self.timerx.timeout.connect(self.msgupdt2) #cvs 
+            self.timerx.callback.append(self.msgupdt2) 
 
     def layoutFinished(self):
         self.setTitle(self.setup_title)
@@ -1232,20 +1270,20 @@ class OpenConfig(Screen, ConfigListScreen):
     def createSetup(self):
         self.editListEntry = None
         self.list = []
-        self.list.append(getConfigListEntry(_('Server:'), config.plugins.TivuStream.server, _("Server selection")))
-        self.list.append(getConfigListEntry(_('Auto Update Plugin:'), config.plugins.TivuStream.autoupd, _("Automatic plugin update")))
-        self.list.append(getConfigListEntry(_('Personal Password:'), config.plugins.TivuStream.code, _("Enter the password to download Lists XXX Adults")))
-        self.list.append(getConfigListEntry(_('IPTV bouquets location '), config.plugins.TivuStream.bouquettop, _("Configure position of the bouquets of the converted lists")))
-        self.list.append(getConfigListEntry(_('Player folder List <.m3u>:'), config.plugins.TivuStream.pthm3uf, _("Folder path containing the .m3u files")))
-        self.list.append(getConfigListEntry(_('Services Reference type'), config.plugins.TivuStream.services, _("Configure Gstreamer/Exteplayer3/StreamLink Service Reference")))
-        self.list.append(getConfigListEntry(_('Link in Extensions Menu:'), config.plugins.TivuStream.strtext, _("Show Plugin in Extensions Menu")))
-        self.list.append(getConfigListEntry(_('Link in Main Menu:'), config.plugins.TivuStream.strtmain, _("Show Plugin in Main Menu")))
+        self.list.append(getConfigListEntry(_('      Server:'), config.plugins.TivuStream.server, _("Server selection")))
+        self.list.append(getConfigListEntry(_('      Auto Update Plugin:'), config.plugins.TivuStream.autoupd, _("Automatic plugin update")))
+        self.list.append(getConfigListEntry(_('      Personal Password:'), config.plugins.TivuStream.code, _("Enter the password to download Lists XXX Adults")))
+        self.list.append(getConfigListEntry(_('      IPTV bouquets location '), config.plugins.TivuStream.bouquettop, _("Configure position of the bouquets of the converted lists")))
+        self.list.append(getConfigListEntry(_('      Player folder List <.m3u>:'), config.plugins.TivuStream.pthm3uf, _("Folder path containing the .m3u files")))
+        self.list.append(getConfigListEntry(_('      Services Reference type'), config.plugins.TivuStream.services, _("Configure Gstreamer/Exteplayer3/StreamLink Service Reference")))
+        self.list.append(getConfigListEntry(_('      Link in Extensions Menu:'), config.plugins.TivuStream.strtext, _("Show Plugin in Extensions Menu")))
+        self.list.append(getConfigListEntry(_('      Link in Main Menu:'), config.plugins.TivuStream.strtmain, _("Show Plugin in Main Menu")))
         self['config'].list = self.list
         self["config"].setList(self.list)
 
     def changedEntry(self):
         for x in self.onChangedEntry:
-                x()        
+            x()        
 
         #
     def getCurrentEntry(self):
@@ -1305,7 +1343,6 @@ class OpenConfig(Screen, ConfigListScreen):
             except Exception as e:
                 print ('openDirectoryBrowser get failed: ', str(e))
 
-
     def openDirectoryBrowserCB(self, path):
                 if path is not None:
                     if self.setting == 'pthm3uf':
@@ -1349,7 +1386,6 @@ class OpenConfig(Screen, ConfigListScreen):
             return
         for x in self['config'].list:
             x[1].cancel()
-        
         self.close()
         
     def extnok(self):
@@ -1371,19 +1407,28 @@ class OpenConfig(Screen, ConfigListScreen):
         self.session.openWithCallback(self.runupdate, openMessageBox, _('Update Plugin ?'), openMessageBox.TYPE_YESNO)
 
     def runupdate(self, result):
-        if self.cbUpdate == False:
-            return
         if result:
             com = self.link
             dom = 'Last version ' + self.version
             os.system('wget %s -O /tmp/tivustream.tar > /dev/null' % com)
             os.system('sleep 3')
             self.session.open(OpenConsole, _('Update Plugin: %s') % dom, ['tar -xvf /tmp/tivustream.tar -C /'], finishedCallback=self.msgrstrt3, closeOnSuccess=True)
+      
+    def ipkrestrt(self, result):
+        if result:
+            epgpath = '/media/hdd/epg.dat'
+            epgbakpath = '/media/hdd/epg.dat.bak'
+            if os.path.exists(epgbakpath):
+                os.remove(epgbakpath)
+            if os.path.exists(epgpath):
+                copyfile(epgpath, epgbakpath)        
+            self.session.open(TryQuitMainloop, 3)
+        else:
+            self.close()                     
             
     def msgrstrt3(self):
-        self.mbox = self.session.open(openMessageBox, _('Plugin Updated!') + '\n' + _('Restart GUI'), openMessageBox.TYPE_INFO, timeout=4)
-        os.system('rm -f /tmp/tivustream.tar')
-        quitMainloop(3)
+        self.session.openWithCallback(self.ipkrestrt, MessageBox, (_('Do you want restart enigma2 ?')),MessageBox.TYPE_YESNO)     
+
         
 class OpenConsole(Screen):
 
@@ -1400,7 +1445,7 @@ class OpenConsole(Screen):
         self['title'] = Label(_('..:: TiVuStream List V. %s  by Lululla ::..' % Version))
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
-        self['infoc'] = Label(_('Credits'))        
+        self['infoc'] = Label(_('Info'))        
         self['infoc2'] = Label('%s' % Credits) 
         self['actions'] = ActionMap(['WizardActions', 'DirectionActions'], {'ok': self.cancel,
          'back': self.cancel,
@@ -1483,7 +1528,7 @@ class openMessageBox(Screen):
         self['title'] = Label(_('..:: TiVuStream List V. %s  by Lululla ::..' % Version))
         self['Maintainer'] = Label(_('Maintainer'))
         self['Maintainer2'] = Label('%s' % Maintainer2)
-        self['infoc'] = Label(_('Credits'))        
+        self['infoc'] = Label(_('Info'))        
         self['infoc2'] = Label('%s' % Credits) 
         self['text'] = Label(text)
         self['Text'] = StaticText(text)
@@ -1546,10 +1591,10 @@ class openMessageBox(Screen):
         self.timeout = timeout
         if timeout > 0:
             self.timer = eTimer()
-            if getOeVersion() != "oe22":
-                self.timer.callback.append(self.timerTick)
+            if isDreamOS:
+                self.timer_conn = self.timer.timeout.connect(self.timerTick)
             else:
-                self.timer_conn = self.timer.timeout.connect(self.timerTick) #cvs             
+                self.timer.callback.append(self.timerTick) 
             
             self.onExecBegin.append(self.startTimer)
             self.origTitle = None
@@ -1659,13 +1704,13 @@ class plgnstrt(Screen):
         self.icount = 0
         self['text'].setText(_('\n\n\nCheck Connection wait please...'))
         self.timer = eTimer()
-        self.timer.start(100, 1)        
-        if getOeVersion() != "oe22":
-            self.timer.callback.append(self.OpenCheck) #pli
+        self.timer.start(100, 1)   
+        
+        if isDreamOS:
+            self.timer_conn = self.timer.timeout.connect(self.OpenCheck)
         else:
-            self.timer_conn = self.timer.timeout.connect(self.OpenCheck) #cvs          
+            self.timer.callback.append(self.OpenCheck) 
 
-            
     def OpenCheck(self):
         url3 = upd_fr_txt
         print 'url3:', url3
@@ -1679,7 +1724,6 @@ class plgnstrt(Screen):
             self['text'].setText(_('\n\n' + 'Error downloading updates!'))
             print"ERROR Download History %s" %(URL)
             
-            
     def error(self, error):
         self['text'].setText(_('\n\n' + 'Server Off !') + '\n' + _('check SERVER in config'))          
         
@@ -1689,8 +1733,11 @@ class plgnstrt(Screen):
         
 def main(session, **kwargs):
     if checkInternet():
-        session.open(plgnstrt)        
-        
+        add_skin_font()
+        if isDreamOS:
+            session.open(OpenScript)         
+        else:
+            session.open(plgnstrt)        
     else:
         session.open(MessageBox, "No Internet", MessageBox.TYPE_INFO)  
         
@@ -1701,9 +1748,12 @@ def main2(session, **kwargs):
         session.open(MessageBox, "No Internet", MessageBox.TYPE_INFO)  
 
 def mainmenu(session, **kwargs):
-    main(session, **kwargs)
-
-
+    # main(session, **kwargs)
+	if menuid == 'mainmenu':
+		return [(_('TiVuStream List'), main, 'TiVuStream List', 4)]
+	else:
+		return []
+        
 def cfgmain(menuid):
     if menuid == 'mainmenu':
         return [('TiVuStream',
@@ -1715,7 +1765,7 @@ def cfgmain(menuid):
 
 def Plugins(**kwargs):
     icona = 'logo.png'
-    if getOeVersion() != "oe22":
+    if not isDreamOS:
         icona = SKIN_PATH + '/logo.png'
     # iconaplayer = SKIN_PATH + '/player.png'
     extDescriptor = PluginDescriptor(name='TiVuStream List', description=_('TiVuStream List'), where=PluginDescriptor.WHERE_EXTENSIONSMENU, icon=icona, fnc=main)

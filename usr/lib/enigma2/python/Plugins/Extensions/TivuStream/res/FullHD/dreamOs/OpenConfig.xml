@@ -30,7 +30,7 @@
   <eLabel position="344,982" size="330,10" backgroundColor="green" zPosition="1" />
   <eLabel position="677,982" size="330,10" backgroundColor="yellow" zPosition="1" />
 
-  <widget name="config" position="874,155" size="994,676" foregroundColorSelected="#ff9900" backgroundColorSelected="#000000" zPosition="3" scrollbarMode="showOnDemand" itemHeight="50" transparent="1" />  
+  <widget name="config" position="874,155" size="994,676" zPosition="3" scrollbarMode="showOnDemand" itemHeight="50" transparent="1" />  
     
   <widget name="text" position="57,672" size="784,214" font="Regular;30" foregroundColor="#ffff00" transparent="1" zPosition="4" />
   <widget name="description" position="898,758" size="970,129" font="Regular; 36" foregroundColor="#ffff00" transparent="1" zPosition="4" />
